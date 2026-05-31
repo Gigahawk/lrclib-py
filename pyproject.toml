@@ -1,0 +1,15 @@
+[build-system]
+requires = ["uv_build>=0.8.14,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = ["pytest<=8.3.4"]
+
+[project]
+name = "lrclib-py"
+version = "0.1.0"
+description = "Stdlib only lrclib package"
+readme = "README.md"
+requires-python = ">=3.8,<3.9"
+dependencies = []
+
