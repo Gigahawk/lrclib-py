@@ -45,7 +45,7 @@ dev = [
 [package.metadata]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = "<=8.3.4" }]
+dev = [{ name = "pytest", specifier = ">=8.0,<=8.3.4" }]
 
 [[package]]
 name = "packaging"
