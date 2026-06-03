@@ -1,6 +1,6 @@
 [build-system]
-requires = ["uv_build>=0.8.14,<0.9.0"]
-build-backend = "uv_build"
+requires = ["setuptools<75.3", "wheel<0.44"]
+build-backend = "setuptools.build_meta"
 
 [dependency-groups]
 dev = ["pytest<=8.3.4"]
