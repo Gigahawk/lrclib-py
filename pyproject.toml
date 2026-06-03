@@ -12,4 +12,3 @@ description = "Stdlib only lrclib package"
 readme = "README.md"
 requires-python = ">=3.8,<3.9"
 dependencies = []
-
