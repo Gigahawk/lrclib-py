@@ -118,7 +118,11 @@ class LrcLib:
         self.api_path: str = "/api"
         self.user_agent: str = "lrclib-py (https://github.com/Gigahawk/lrclib-py)"
         self.timeout: int = 10
-        self._auto_retries: int = 3
+
+        self.app_id: Optional[str] = None
+        self.api_key: Optional[str] = None
+
+        self._auto_retries: int = 10
         self._retries_remaining: int = self._auto_retries
         # Token is always expired when we initialize
         self._token_expiry: float = time.time()
@@ -252,6 +256,10 @@ class LrcLib:
         if with_publish_token:
             headers["X-Publish-Token"] = self._publish_token
             headers["Content-Type"] = "application/json"
+        if self.app_id:
+            headers["Lrclib-App-Id"] = self.app_id
+        if self.api_key:
+            headers["Lrclib-Api-Key"] = self.api_key
         return headers
 
     def _request_challenge(self):

@@ -1,9 +1,15 @@
 from time import sleep
 from random import random
+import os
 
 import pytest
 
-from lrclib_py import LrcLib, LrcLibSubmission, LrcLibRateLimitError
+from lrclib_py import (
+    LrcLib,
+    LrcLibSubmission,
+    LrcLibRateLimitError,
+    LrcLibInvalidAppIdError,
+)
 
 TEST_DATA = LrcLibSubmission(
     trackName="TEST-LRCLIBPY",
@@ -18,6 +24,56 @@ TEST_DATA = LrcLibSubmission(
 
 def test_get():
     client = LrcLib()
+    result = client.get(
+        artist_name="Borislav Slavov",
+        track_name="I Want to Live",
+        album_name="Baldur's Gate 3 (Original Game Soundtrack)",
+        duration=233,
+    )
+    assert result.id == 3396226
+
+
+def test_get_invalid_app_id():
+    client = LrcLib()
+    client.app_id = "00000000000000000000000000000000000000000000"
+    with pytest.raises(LrcLibInvalidAppIdError):
+        _ = client.get(
+            artist_name="Borislav Slavov",
+            track_name="I Want to Live",
+            album_name="Baldur's Gate 3 (Original Game Soundtrack)",
+            duration=233,
+        )
+
+
+def test_get_client():
+    app_id = os.environ.get("LRCLIB_PY_CLIENT_APP_ID", None)
+    if not app_id:
+        pytest.skip("LRCLIB_PY_CLIENT_APP_ID not provided in environment")
+        return
+
+    client = LrcLib()
+    client.app_id = app_id
+    result = client.get(
+        artist_name="Borislav Slavov",
+        track_name="I Want to Live",
+        album_name="Baldur's Gate 3 (Original Game Soundtrack)",
+        duration=233,
+    )
+    assert result.id == 3396226
+
+
+def test_get_server():
+    app_id = os.environ.get("LRCLIB_PY_SERVER_APP_ID", None)
+    api_key = os.environ.get("LRCLIB_PY_SERVER_API_KEY", None)
+    if not app_id:
+        pytest.skip("LRCLIB_PY_SERVER_APP_ID not provided in environment")
+        return
+    if not api_key:
+        pytest.skip("LRCLIB_PY_SERVER_API_KEY not provided in environment")
+        return
+    client = LrcLib()
+    client.app_id = app_id
+    client.api_key = api_key
     result = client.get(
         artist_name="Borislav Slavov",
         track_name="I Want to Live",
