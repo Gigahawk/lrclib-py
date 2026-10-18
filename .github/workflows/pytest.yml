@@ -16,4 +16,8 @@ jobs:
       - name: Install the project
         run: uv sync --locked --all-extras --dev
       - name: Run tests
+        env:
+          LRCLIB_PY_CLIENT_APP_ID: ${{ secrets.LRCLIB_PY_CLIENT_APP_ID }} 
+          LRCLIB_PY_SERVER_APP_ID: ${{ secrets.LRCLIB_PY_SERVER_APP_ID }} 
+          LRCLIB_PY_SERVER_API_KEY: ${{ secrets.LRCLIB_PY_SERVER_API_KEY }}
         run: uv run pytest
